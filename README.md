@@ -1,0 +1,2 @@
+# WorldJournal
+Subcreation management aid.
