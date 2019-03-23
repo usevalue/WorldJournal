@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        #navbar {
+            margin: auto;
+            color: red;
+            border: 1px solid black;
+            }
+
+        body {
+            background-color: lightblue;
+            }
+        p {
+            color: red;
+            }
+    </style>
+    <title>{% block title %}Welcome to the WorldJournal{% endblock %}</title>
+</head>
+<body>
+    <div id="navbar">
+        <table>
+            <tr>
+                <td class="shiny"><a href = "/">Welcome</a></td>
+                <td class="shiny"><a href="/time">Time</a></td></td>
+                <td class="shiny">Maps</td>
+                <td></td>
+                <td class="shiny"><a href="/user/login">My Journal</a></td>
+            </tr>
+        </table>
+    </div>
+    <div id="content">
+        {% block content %}This page has no content.{% endblock %}
+    </div>
+</body>
+</html>

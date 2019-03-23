@@ -1,10 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "site_layout.html "%}
 
-</body>
-</html>
+{% block title %}Worldjournal Login{% endblock %}
+
+{% block content %}
+
+    {% if form.errors %}
+        User/password combination not found!  Do you need to register an account?
+    {% endif %}
+
+    {% if next %}
+    {% endif %}
+
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <p>Username: {{ form.username }}</p>
+        <p>Password: {{ form.password }}</p>
+        <span style="align:center"><input type="submit" value="login"></span>
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+
+{% endblock %}

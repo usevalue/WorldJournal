@@ -20,7 +20,6 @@ from . import views
 urlpatterns = [
     path('', views.welcome),
     path('admin/', admin.site.urls),
-    path('login/', views.userpage),
     path('user/', include('django.contrib.auth.urls')),
     path('time/', include('wjtime.urls'))
 ]
