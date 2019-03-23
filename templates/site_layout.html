@@ -6,28 +6,45 @@
 <head>
     <meta charset="UTF-8">
     <style type="text/css">
+
+
+        body {
+            background-color: lightblue;
+        }
+
+        p {
+            color: black;
+        }
+
         #navbar {
             margin: auto;
             color: red;
             border: 1px solid black;
-            }
+        }
 
-        body {
-            background-color: lightblue;
-            }
-        p {
-            color: red;
-            }
+        #navbar.table.tr.td {
+            padding: 6 px;
+            width: 100 px;
+        }
+
+        #content {
+            margin: 40px 100px 0px;
+            padding: 40px 100px;
+            border: 1px solid black;
+        }
+
+
     </style>
     <title>{% block title %}Welcome to the WorldJournal{% endblock %}</title>
 </head>
+
 <body>
-    <div id="navbar">
-        <table>
+    <div id="navbar" align="center">
+        <table width="100%">
             <tr>
                 <td class="shiny"><a href = "/">Welcome</a></td>
                 <td class="shiny"><a href="/time">Time</a></td></td>
-                <td class="shiny">Maps</td>
+                <td class="shiny"><a href="/maps">Maps</a></td>
                 <td></td>
                 <td class="shiny"><a href="/user/login">My Journal</a></td>
             </tr>
