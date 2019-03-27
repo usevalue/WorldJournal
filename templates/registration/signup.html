@@ -1,0 +1,15 @@
+{% extends "site_layout.html" %}
+
+{% block title %}Register a new account.{% endblock %}
+
+{% block content %}
+{% if form.errors %}
+Your account could not be validated.
+{% endif %}
+<form method="post">
+ {% csrf_token %}
+ {{ form.as_p }}
+ <button type="submit">Sign up!</button>
+</form>
+
+{% endblock %}

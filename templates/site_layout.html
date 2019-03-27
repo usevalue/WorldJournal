@@ -17,20 +17,21 @@
         }
 
         #navbar {
-            margin: auto;
-            color: red;
-            border: 1px solid black;
+            text-size: 16px;
+            color: black;
         }
 
-        #navbar.table.tr.td {
-            padding: 6 px;
-            width: 100 px;
+        .shiny {
+            text-align: center;
+            font-size: 22px;
+            border: 2px solid black;
+            width: 150px;
         }
 
         #content {
-            margin: 40px 100px 0px;
+            margin: 100px 100px 0px;
             padding: 40px 100px;
-            border: 1px solid black;
+            border: 3px solid blue;
         }
 
 
@@ -39,17 +40,25 @@
 </head>
 
 <body>
-    <div id="navbar" align="center">
-        <table width="100%">
+
+    <div id="navbar">
+        <table cellpadding="6" align="center" width="95%">
             <tr>
-                <td class="shiny"><a href = "/">Welcome</a></td>
-                <td class="shiny"><a href="/time">Time</a></td></td>
+                <td class="shiny"><a href = "/">Library</a></td>
+                <td class="shiny"><a href="/time">Timelines</a></td>
                 <td class="shiny"><a href="/maps">Maps</a></td>
                 <td></td>
-                <td class="shiny"><a href="/user/login">My Journal</a></td>
+                <td class="shiny">
+                    {% if user.is_authenticated %}
+                    Hello, {{ user.username }}.<br/><a href="/logout/">Log out?</a>
+                    {% else %}
+                    Hello stranger.<br/><a href="/login/">Log in?</a>
+                    {% endif %}
+                </td>
             </tr>
         </table>
     </div>
+
     <div id="content">
         {% block content %}This page has no content.{% endblock %}
     </div>

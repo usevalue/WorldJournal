@@ -1,11 +1,9 @@
 {% extends "site_layout.html "%}
 
-{% block title %}Worldjournal Login{% endblock %}
-
 {% block content %}
 
     {% if form.errors %}
-        User/password combination not found!  Do you need to register an account?
+        User/password combination not found!<br/>Do you need to register an account?
     {% endif %}
 
     {% if next %}
@@ -18,5 +16,9 @@
         <span style="align:center"><input type="submit" value="login"></span>
         <input type="hidden" name="next" value="{{ next }}">
     </form>
+
+<br/><br/>
+
+Or do you need to <a href="/signup">register</a> a new account?
 
 {% endblock %}
