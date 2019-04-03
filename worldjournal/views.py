@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 def library(request):
-    return render(request, 'archive.html')
+    return render(request, 'shelves.html')
 
 
 def openbook(request):

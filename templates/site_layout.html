@@ -12,6 +12,12 @@
             background-color: lightblue;
         }
 
+        th {
+            text-align: center;
+        }
+        h2 {
+        }
+
         p {
             color: black;
         }
@@ -23,7 +29,7 @@
 
         .shiny {
             text-align: center;
-            font-size: 22px;
+            font-size: 18px;
             border: 2px solid black;
             width: 150px;
         }
@@ -42,17 +48,18 @@
 <body>
 
     <div id="navbar">
-        <table cellpadding="6" align="center" width="95%">
+        <table cellpadding="2" align="center" width="95%">
             <tr>
-                <td class="shiny"><a href = "/">Library</a></td>
+                <td class="shiny" style="font-size:40px; width:80px"><a href="/">WJ</a></td>
+                <td class="shiny"><a href = "/library">Library</a></td>
                 <td class="shiny"><a href="/time">Timelines</a></td>
                 <td class="shiny"><a href="/maps">Maps</a></td>
                 <td></td>
-                <td class="shiny">
+                <td class="shiny" style="font-size:14px">
                     {% if user.is_authenticated %}
-                    Hello, {{ user.username }}.<br/><a href="/logout/">Log out?</a>
+                    <b>Hello, {{ user.username }}!</b><br/><a href="/logout/">Log out?</a>
                     {% else %}
-                    Hello stranger.<br/><a href="/login/">Log in?</a>
+                    <b>Hello stranger!</b><br/><a href="/login/">Log in</a> or <a href="/signup/">register</a>?
                     {% endif %}
                 </td>
             </tr>
@@ -60,7 +67,18 @@
     </div>
 
     <div id="content">
-        {% block content %}This page has no content.{% endblock %}
+        <table width="90%" border="0">
+            <tr>
+                <td colspan="3"><div id="flavour" style="font-size: 18px; font-style: italic">{% block flavour %}{% endblock %}</div></td>
+            </tr>
+            <tr>
+                <td width="20"></td>
+                <td>
+                   {% block content %}This page has no content.{% endblock %}
+                </td>
+                <td width=""20"></td>
+            </tr>
+        </table>
     </div>
 </body>
 </html>

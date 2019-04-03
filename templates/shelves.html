@@ -1,0 +1,59 @@
+{% extends "site_layout.html" %}
+
+{% block title %}Among the shelves{% endblock %}
+
+{% block flavour %}
+{% if problem %}<h1 style="color:red">{{ problem }}</h1>
+{% else %}You stand before the library shelves.<br/><br/>{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<center>
+    <table width="100%" cellspacing="0" cellpadding="4" border="0"><tr><td width="50%" align="center">
+        <tr>
+        <td>
+            <!--
+            <form method="POST" action="/library/search/">{% csrf_token %}
+                Search by author: <input type="text" id="world_author" required />
+                <button type="submit">Search.</button>
+            </form>
+            <br/><br/>
+            -->
+
+            {% if user.is_authenticated %}
+            <form method="POST" action="read/">{% csrf_token %}
+                    Create new world:<br/>
+                    Name: <input type="text" id="new_world_title" required /><br/>
+                    <button type="submit">Create World</button>
+            </form>
+            {% else %}
+            <a href="/login">Log in</a> to create and manage your own worlds.
+            {% endif %}
+
+        </td>
+
+        <td>
+            <h2 align="center">All Worlds</h2>
+            <table border="1" cellspacing="0"width="95%">
+            <tr>
+                <th>Author</th>
+                <th>World</th>
+            </tr>
+            {% for world in worlds %}
+            <tr>
+                <td>
+                    {% for author in world.authors.all %}
+                    {{ author.fullName }}{% if worlds.authors.length > 1 %}, {% endif %}
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="read/{{world.pk}}">{{world.title}}</a>
+                </td>
+            </tr>
+            {% endfor %}
+            </table>
+    </td></tr>
+    </table>
+</center>
+{% endblock %}

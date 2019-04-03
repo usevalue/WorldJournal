@@ -1,0 +1,17 @@
+{% extends 'site_layout.html' %}
+
+{% block title %}Your desk{% endblock %}
+{% block flavour %}
+You set the book on your desk and open it.
+{% endblock %}
+
+{% block content %}
+
+<table>
+    <tr>
+        <th>Title: {{ world.title }}</th>
+    </tr>
+</table>
+
+{% endblock %}
+
