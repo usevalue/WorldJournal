@@ -4,10 +4,13 @@
 
 {% block flavour %}
 <h2>Greetings,
-    {% if user.is_authenticated %}{{ user.username }}{% else %}stranger{% endif %}.</h2>
+    {% if author %}{{ author.name }}{% else %}stranger{% endif %}.</h2>
 {% endblock %}
 
 {% block content %}
+{% if user.is_authenticated %}
+{% else %}
 Have we met?  <a href="/login">Remind me</a>.<br/><br/>
 Or else <a href="/register">introduce yourself</a>.
+{% endif %}
 {% endblock %}

@@ -3,16 +3,25 @@ from django.db import models
 
 class Author(models.Model):
     name = models.CharField(max_length=30)
-    fullName = models.CharField(max_length=30)
     username = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.fullName
+        return self.username
 
 
 class World(models.Model):
     title = models.CharField(max_length=30)
-    authors = models.ManyToManyField(Author)
+    author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
+    description = models.TextField(null=False)
+    purpose = models.TextField(null=True)
 
     def __str__(self):
         return self.title
+
+
+class EnvironmentVariable(models.Model):
+    world = models.ForeignKey(World, on_delete=models.CASCADE)
+    name = models.CharField(max_length=20)
+    type = models.CharField(max_length=12)
+    magnitude = models.DecimalField(max_digits=20, decimal_places=8)
+    content = models.CharField(max_length=20)

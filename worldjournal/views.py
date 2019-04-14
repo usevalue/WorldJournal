@@ -1,18 +1,21 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
-
-
-def library(request):
-    return render(request, 'shelves.html')
-
-
-def openbook(request):
-    return render(request, 'worldsummary.html')
+from django.core.exceptions import ObjectDoesNotExist
+from wjlibrary.models import Author
 
 
 def welcome(request):
-    return render(request, 'welcome.html')
+    if request.user.is_authenticated:
+        try:
+            author = Author.objects.get(username=request.user.username)
+            return render(request, 'welcome.html', {'author': author})
+        except ObjectDoesNotExist:
+            author = Author(username=request.user.username, name=request.user.username)
+            author.save()
+            return render(request, 'welcome.html', {'message': 'Thanks for joining.  You can now create worlds.'})
+    else:
+        return render(request, 'welcome.html',)
 
 
 def signup(request):
@@ -27,5 +30,5 @@ def signup(request):
             return redirect('/')
     else:
         form = UserCreationForm()
-    return render(request, 'registration/signup.html', {'form':form})
+    return render(request, 'registration/signup.html', {'form': form})
 

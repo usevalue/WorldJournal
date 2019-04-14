@@ -36,7 +36,7 @@
 
         #content {
             margin: 100px 100px 0px;
-            padding: 40px 100px;
+            padding: 20px 40px;
             border: 3px solid blue;
         }
 
@@ -67,16 +67,17 @@
     </div>
 
     <div id="content">
-        <table width="90%" border="0">
+        <table width="100%" border="0">
             <tr>
-                <td colspan="3"><div id="flavour" style="font-size: 18px; font-style: italic">{% block flavour %}{% endblock %}</div></td>
+                <td><div id="flavour" style="font-size: 24px; font-style: italic">
+                    {% if message %}<span style="font-color: red">Notice: {{ message }}</span>{% else %}
+                    {% block flavour %}{% endblock %}{% endif %}
+                </div></td>
             </tr>
             <tr>
-                <td width="20"></td>
                 <td>
                    {% block content %}This page has no content.{% endblock %}
                 </td>
-                <td width=""20"></td>
             </tr>
         </table>
     </div>

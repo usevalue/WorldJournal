@@ -3,8 +3,8 @@
 {% block title %}Among the shelves{% endblock %}
 
 {% block flavour %}
-{% if problem %}<h1 style="color:red">{{ problem }}</h1>
-{% else %}You stand before the library shelves.<br/><br/>{% endif %}
+{% if message %}<h1 style="color:red">{{ message }}</h1>
+{% else %}You are browsing the shelves of the library.<br/><br/>{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -22,11 +22,7 @@
             -->
 
             {% if user.is_authenticated %}
-            <form method="POST" action="read/">{% csrf_token %}
-                    Create new world:<br/>
-                    Name: <input type="text" id="new_world_title" required /><br/>
-                    <button type="submit">Create World</button>
-            </form>
+            <a href="/library/draft/">Create new world.</a>
             {% else %}
             <a href="/login">Log in</a> to create and manage your own worlds.
             {% endif %}
@@ -43,12 +39,10 @@
             {% for world in worlds %}
             <tr>
                 <td>
-                    {% for author in world.authors.all %}
-                    {{ author.fullName }}{% if worlds.authors.length > 1 %}, {% endif %}
-                    {% endfor %}
+                    {{world.author.name}}
                 </td>
                 <td>
-                    <a href="read/{{world.pk}}">{{world.title}}</a>
+                    <a href="/library/read/{{world.pk}}">{{world.title}}</a>
                 </td>
             </tr>
             {% endfor %}

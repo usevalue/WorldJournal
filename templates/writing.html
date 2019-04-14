@@ -1,0 +1,17 @@
+{% extends "site_layout.html" %}
+
+{% block title %}Drafting new world{% endblock %}
+
+{% block flavour %}{% if message %}{{message}}{% else %}{{author.username}} is drafting a new world...{% endif %}{% endblock %}
+{% block content %}<br/><br/>
+<form method="POST" action="/library/draft/">
+    {% csrf_token %}
+    <b>Name your world:</b> <input type="text" name="world-title" /><br/><br/>
+    <b>Write an overall description of your world:</b><br/>
+    <textarea name="world-description" cols="100"></textarea>
+    <br/><br/>
+    <b>What is the purpose of the world?</b> (Optional) <br/>
+    <textarea name="world-purpose" cols="40"></textarea>
+    <input type="submit" action="POST" name="Create world" />
+</form>
+{% endblock %}

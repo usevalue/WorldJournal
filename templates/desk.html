@@ -1,17 +1,67 @@
 {% extends 'site_layout.html' %}
 
-{% block title %}Your desk{% endblock %}
+{% block title %}Reading world: {{world.title}}{% endblock %}
 {% block flavour %}
-You set the book on your desk and open it.
+<h3 style="font-style:normal">You are reading <i>{{ world.title }}</i> by {{world.author.name}}</h3>
 {% endblock %}
 
 {% block content %}
+<script language="JavaScript">
+    function startEdit(element) {
+        tasty = "<textarea name="+element+">"+document.getElementById(element).innerHTML+"</textarea>";
+        document.getElementById(element).innerHTML=tasty;
+    }
+</script>
+    {% csrf_token %}
+    <table border="1" width="90%">
 
-<table>
-    <tr>
-        <th>Title: {{ world.title }}</th>
-    </tr>
-</table>
+
+        <tr>
+            <td width="15%"></td>
+            <th><b>Description</b></th>
+            <td width="15%"></td></tr>
+        <tr>
+            <td></td>
+            <td><div id="description">{{world.description}}</div></td>
+            <td width="20">
+                <!--
+                {% if world.author == author %}
+                <button onclick="startEdit('description')">Edit</button>
+                {% endif %}
+                -->
+            </td>
+        </tr>
+
+
+
+        {% if world.purpose %}
+
+       <tr><td colspan="3" height="10"></td></tr>
+
+        <tr>
+            <td></td>
+            <th>Purpose</th>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><div id="purpose">{{ world.purpose }}</div></td>
+            <td></td>
+        </tr>
+
+        {% endif %}
+
+        {% if world.author == author %}
+        <tr><td colspan="3" height="30"></td></tr>
+        <tr><th colspan="3">
+            <form action="/library/delete/{{ world.pk }}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Delete world"/>  (No take-backs!!!)
+            </form>
+        </th></tr>
+        {% endif %}
+    </table>
+
 
 {% endblock %}
 
