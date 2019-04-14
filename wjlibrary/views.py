@@ -14,15 +14,19 @@ def browse(request, worlds):
 def read(request, world_id):
     world = World.objects.get(pk=world_id)
     author = getAuthor(request)
+    if author == world.author:
+        if request.method == 'POST':
+            d = request.POST.get('descrip')
+            if d:
+                world.description = d
+            h = request.POST.get('hist')
+            if h:
+                world.history_overview = h
+            p = request.POST.get('purp')
+            if p:
+                world.purpose = p
+            world.save()
     return render(request, 'desk.html', {'world': world, 'author': author})
-
-
-def delete(request, world_id):
-    if request.method == 'POST':
-        World.objects.get(pk=world_id).delete()
-        return redirect('/library/', {'message': 'World obliterated.'})
-    else:
-        return redirect('/library/')
 
 
 def draft(request):
@@ -30,7 +34,12 @@ def draft(request):
         author = getAuthor(request)
         if author:
             if request.method == 'POST':
-                return press(request, author)
+                title = request.POST.get('world-title')
+                description = request.POST.get('world-description')
+                history = request.POST.get('world-history')
+                purpose = request.POST.get('world-purpose')
+                newWorld = World(title=title, author=author, description=description, history_overview=history, purpose=purpose)
+                newWorld.save()
             worlds = World.objects.filter(author=author)
             if worlds.count() < 3:
                 return render(request, 'writing.html', {'author': author})
@@ -43,16 +52,12 @@ def draft(request):
         return redirect('/library/', {'message': 'You have to log in to create a world.'})
 
 
-def press(request, author):
+def delete(request, world_id):
     if request.method == 'POST':
-        title = request.POST.get('world-title')
-        description = request.POST.get('world-description')
-        purpose = request.POST.get('world-purpose')
-        newWorld = World(title=title, author=author, description=description, purpose=purpose)
-        newWorld.save()
-        return read(request, newWorld.pk)
+        World.objects.get(pk=world_id).delete()
+        return redirect('/library/', {'message': 'World obliterated.'})
     else:
-        return redirect('/')
+        return redirect('/library/')
 
 
 def getAuthor(request):

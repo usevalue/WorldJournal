@@ -2,71 +2,128 @@
 
 {% block title %}Reading world: {{world.title}}{% endblock %}
 {% block flavour %}
-<span style="font-style:normal">You are reading <i>{{ world.title }}</i> by {{world.author.name}}</span>
+<span style="font-style:normal">You are <span id="currently">reading</span> <i>{{ world.title }}</i> by {{world.author.name}}</span>
 {% endblock %}
 
 {% block content %}
+
+{% if world.author == author %}
+
 <script language="JavaScript">
-    function startEdit(element) {
-        tasty = "<textarea name="+element+">"+document.getElementById(element).innerHTML+"</textarea>";
-        document.getElementById(element).innerHTML=tasty;
-        document.getElementById('edit-'+element).style.display = "none";
-        document.getElementById('save-'+element).style.display = "inline";
+    function editElement(element) {
+        document.getElementById('currently').innerHTML = "editing";
+        document.getElementById('saved-'+element).style.display = "none";
+        e = document.getElementsByClassName('edit');
+        for (i=0; i<e.length; i++) {
+            e[i].style.display = "none";
+        }
+        document.getElementById('editing-'+element).style.display = "inline";
+        document.getElementById('entered-'+element).innerHTML = document.getElementById('saved-'+element).innerHTML;
     }
 </script>
-    {% csrf_token %}
-    <table border="0" width="90%">
+{% endif %}
 
+<table border="0" width="90%">
 
-        <tr>
-            <td width="15%"></td>
-            <th><b>Description</b></th>
-            <td width="15%"></td></tr>
-        <tr>
-            <td></td>
-            <td><div id="description">
-                {{world.description}}</div></td>
-            <td width="20">
-                {% if world.author == author %}
-                <span id="edit-description" style="display: inline"><button onclick="startEdit('description')">Edit</button></span>
-                <span id="save-description" style="display: none">
-                <form action="">
-                    <input type="submit" value="Save"/>
-                </form>
-                </span>
-                {% endif %}
-            </td>
-        </tr>
+    <tr>
+        <td width="15%"></td>
+        <th><b>Description</b></th>
+        <td width="15%"></td>
+    </tr>
 
-
-
-        {% if world.purpose %}
-
-       <tr><td colspan="3" height="10"></td></tr>
-
-        <tr>
-            <td></td>
-            <th>Purpose</th>
-            <td></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><div id="purpose">{{ world.purpose }}</div></td>
-            <td></td>
-        </tr>
-
-        {% endif %}
-
-        {% if world.author == author %}
-        <tr><td colspan="3" height="30"></td></tr>
-        <tr><th colspan="3">
-            <form action="/library/delete/{{ world.pk }}" method="post">
+    <tr>
+        <td></td>
+        <td align="center">
+            <div id="editing-description" style="display:none">
+            <form method="POST" action="/library/read/{{ world.id }}">
                 {% csrf_token %}
-                <input type="submit" value="Delete world"/>  (No take-backs!!!)
+                <textarea id="entered-description" name="descrip"></textarea>
+                <br/>
+                <input type="submit" value="Save changes"/>
             </form>
-        </th></tr>
-        {% endif %}
-    </table>
+            </div>
+            <div id="saved-description" style="text-align: left">{{world.description}}</div>
+        </td>
+        <td>
+            {% if world.author == author %}
+                <span class="edit" style="display: inline">
+                    <button onclick="editElement('description')">Edit</button>
+                </span>
+            {% endif %}
+        </td>
+    </tr>
+
+    <tr><td colspan="3" height="10"></td></tr>
+
+    <tr>
+        <td></td>
+        <th>World History</th>
+        <td></td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td align="center">
+            <div id="editing-history" style="display:none">
+            <form method="POST" action="/library/read/{{ world.id }}">
+                {% csrf_token %}
+                <textarea id="entered-history" name="hist"></textarea>
+                <br/>
+                <input type="submit" value="Save changes"/>
+            </form>
+            </div>
+            <div id="saved-history" style="text-align: left">{{world.history_overview}}</div>
+        </td>
+        <td>
+            {% if world.author == author %}
+                <span class="edit" style="display: inline">
+                    <button onclick="editElement('history')">Edit</button>
+                </span>
+            {% endif %}
+        </td>
+    </tr>
+
+    <tr><td colspan="3" height="10"></td></tr>
+
+    <tr>
+        <td></td>
+        <th>World Purpose</th>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td align="center">
+            <div id="editing-purpose" style="display:none">
+            <form method="POST" action="/library/read/{{ world.id }}">
+                {% csrf_token %}
+                <textarea id="entered-purpose" name="purp"></textarea>
+                <br/>
+                <input type="submit" value="Save changes"/>
+            </form>
+            </div>
+            <div id="viewing-purpose">
+                <div id="saved-purpose" style="text-align: left">{{world.purpose}}</div>
+            </div>
+        </td>
+        <td>
+            {% if world.author == author %}
+                <span class="edit" style="display: inline">
+                    <button onclick="editElement('purpose')">Edit</button>
+                </span>
+            {% endif %}
+        </td>
+    </tr>
+
+    {% if world.author == author %}
+    <tr><td colspan="3" height="30"></td></tr>
+    <tr><th colspan="3">
+        <form action="/library/delete/{{ world.pk }}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Delete world"/>  (No take-backs!!!)
+        </form>
+    </th></tr>
+    {% endif %}
+</table>
 
 
 {% endblock %}
