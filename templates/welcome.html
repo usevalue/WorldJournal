@@ -3,8 +3,7 @@
 {% block title %}Welcome to the WorldJournal{% endblock %}
 
 {% block flavour %}
-<h2>Greetings,
-    {% if author %}{{ author.name }}{% else %}stranger{% endif %}.</h2>
+Greetings, {% if author %}{{ author.name }}{% else %}stranger{% endif %}.
 {% endblock %}
 
 {% block content %}

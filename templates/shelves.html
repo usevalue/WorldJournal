@@ -9,45 +9,43 @@
 
 {% block content %}
 
-<center>
-    <table width="100%" cellspacing="0" cellpadding="4" border="0"><tr><td width="50%" align="center">
-        <tr>
-        <td>
-            <!--
-            <form method="POST" action="/library/search/">{% csrf_token %}
-                Search by author: <input type="text" id="world_author" required />
-                <button type="submit">Search.</button>
-            </form>
-            <br/><br/>
-            -->
 
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+    <tr>
+        <td valign="top" width="120" rowspan="2">
             {% if user.is_authenticated %}
             <a href="/library/draft/">Create new world.</a>
             {% else %}
             <a href="/login">Log in</a> to create and manage your own worlds.
             {% endif %}
-
         </td>
 
+        <th>Worlds</th>
+    </tr>
+
+    <tr>
         <td>
-            <h2 align="center">All Worlds</h2>
-            <table border="1" cellspacing="0"width="95%">
-            <tr>
-                <th>Author</th>
-                <th>World</th>
-            </tr>
-            {% for world in worlds %}
-            <tr>
-                <td>
-                    {{world.author.name}}
-                </td>
-                <td>
-                    <a href="/library/read/{{world.pk}}">{{world.title}}</a>
-                </td>
-            </tr>
-            {% endfor %}
+            <table border="1" cellspacing="0" width="75%" align="center">
+                <tr>
+                    <th>Author</th>
+                    <th>World</th>
+                </tr>
+
+                {% for world in worlds %}
+                <tr>
+                    <td>
+                        {{world.author.name}}
+                    </td>
+                    <td>
+                        <a href="/library/read/{{world.pk}}">{{world.title}}</a>
+                    </td>
+                </tr>
+                {% endfor %}
             </table>
-    </td></tr>
-    </table>
-</center>
+        </td>
+
+        <td width="10%"></td>
+    </tr>
+</table>
+
 {% endblock %}

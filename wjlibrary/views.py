@@ -4,7 +4,10 @@ from .models import World, Author
 
 
 def shelves(request):
-    worlds = World.objects.all().order_by('author')
+    return browse(request, World.objects.order_by('author'))
+
+
+def browse(request, worlds):
     return render(request, 'shelves.html', {'worlds': worlds})
 
 
@@ -28,12 +31,14 @@ def draft(request):
         if author:
             if request.method == 'POST':
                 return press(request, author)
-            if World.objects.filter(author=author).count() < 3:
+            worlds = World.objects.filter(author=author)
+            if worlds.count() < 3:
                 return render(request, 'writing.html', {'author': author})
             else:
-                return redirect('/library/', {'message': 'No more than three worlds per author!'})
+                return render(request, 'shelves.html',
+                              {'message': 'No more than three worlds per author!', 'worlds': worlds})
         else:
-            return redirect('/', {'message': 'Weird error.  Redirecting you here is supposed to be a fix.'})
+            return redirect('/', {'message': 'Your author record could not be found.  If problem persists, contact management.'})
     else:
         return redirect('/library/', {'message': 'You have to log in to create a world.'})
 

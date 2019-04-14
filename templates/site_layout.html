@@ -35,7 +35,7 @@
         }
 
         #content {
-            margin: 100px 100px 0px;
+            margin: 40px 80px 0px;
             padding: 20px 40px;
             border: 3px solid blue;
         }
@@ -69,8 +69,8 @@
     <div id="content">
         <table width="100%" border="0">
             <tr>
-                <td><div id="flavour" style="font-size: 24px; font-style: italic">
-                    {% if message %}<span style="font-color: red">Notice: {{ message }}</span>{% else %}
+                <td><div id="flavour" style="font-size: 28px; font-style: italic">
+                    {% if message %}<span style="font-color: red">{{ message }}</span>{% else %}
                     {% block flavour %}{% endblock %}{% endif %}
                 </div></td>
             </tr>

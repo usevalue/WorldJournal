@@ -2,7 +2,7 @@
 
 {% block title %}Reading world: {{world.title}}{% endblock %}
 {% block flavour %}
-<h3 style="font-style:normal">You are reading <i>{{ world.title }}</i> by {{world.author.name}}</h3>
+<span style="font-style:normal">You are reading <i>{{ world.title }}</i> by {{world.author.name}}</span>
 {% endblock %}
 
 {% block content %}
@@ -10,6 +10,8 @@
     function startEdit(element) {
         tasty = "<textarea name="+element+">"+document.getElementById(element).innerHTML+"</textarea>";
         document.getElementById(element).innerHTML=tasty;
+        document.getElementById('edit-'+element).style.display = "none";
+        document.getElementById('save-'+element).style.display = "inline";
     }
 </script>
     {% csrf_token %}
@@ -22,13 +24,17 @@
             <td width="15%"></td></tr>
         <tr>
             <td></td>
-            <td><div id="description">{{world.description}}</div></td>
+            <td><div id="description">
+                {{world.description}}</div></td>
             <td width="20">
-                <!--
                 {% if world.author == author %}
-                <button onclick="startEdit('description')">Edit</button>
+                <span id="edit-description" style="display: inline"><button onclick="startEdit('description')">Edit</button></span>
+                <span id="save-description" style="display: none">
+                <form action="">
+                    <input type="submit" value="Save"/>
+                </form>
+                </span>
                 {% endif %}
-                -->
             </td>
         </tr>
 
